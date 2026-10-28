@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireOwner } from "@/lib/auth";
+import { sendBookingConfirmed, sendBookingRescheduled } from "@/lib/email";
 
 const UUID =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -35,7 +36,7 @@ export async function changeStatus(formData: FormData) {
 
   const { data: current } = await supabase
     .from("appointments")
-    .select("status")
+    .select("*")
     .eq("id", id)
     .maybeSingle();
 
@@ -59,8 +60,19 @@ export async function changeStatus(formData: FormData) {
     );
   }
 
+  // Customer confirmation (only if they gave an email address)
+  if (next === "confirmed" && current.email) {
+    await sendBookingConfirmed(current);
+  }
+
   revalidatePath("/admin", "layout");
-  back(id, "ok", "Status updated.");
+  back(
+    id,
+    "ok",
+    next === "confirmed" && current.email
+      ? "Approved. A confirmation email was sent to the customer."
+      : "Status updated."
+  );
 }
 
 export async function saveMechanic(formData: FormData) {
@@ -91,7 +103,7 @@ export async function reschedule(formData: FormData) {
 
   const { data: current } = await supabase
     .from("appointments")
-    .select("status")
+    .select("*")
     .eq("id", id)
     .maybeSingle();
 
@@ -114,6 +126,22 @@ export async function reschedule(formData: FormData) {
     );
   }
 
+  // Tell the customer only if they were already confirmed
+  const notify = current.status === "confirmed" && current.email;
+  if (notify) {
+    await sendBookingRescheduled({
+      ...current,
+      appointment_date: date,
+      appointment_time: time,
+    });
+  }
+
   revalidatePath("/admin", "layout");
-  back(id, "ok", "Appointment rescheduled.");
+  back(
+    id,
+    "ok",
+    notify
+      ? "Appointment rescheduled. The customer was notified by email."
+      : "Appointment rescheduled."
+  );
 }

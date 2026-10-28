@@ -14,13 +14,7 @@ const links = [
   { href: "/contact", label: "Contact Us" },
 ];
 
-export default function Navbar({
-  name,
-  logoUrl,
-}: {
-  name: string;
-  logoUrl: string | null;
-}) {
+export default function Navbar({ name }: { name: string }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
@@ -35,15 +29,14 @@ export default function Navbar({
           className="flex items-center gap-3"
           onClick={() => setOpen(false)}
         >
-          {logoUrl && (
-            <Image
-              src={logoUrl}
-              alt=""
-              width={36}
-              height={36}
-              className="h-9 w-auto"
-            />
-          )}
+          <Image
+            src="/logo-mark.png"
+            alt=""
+            width={437}
+            height={426}
+            priority
+            className="h-9 w-auto"
+          />
           <span className="text-sm font-bold uppercase tracking-[0.25em]">
             {name}
           </span>

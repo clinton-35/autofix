@@ -1,4 +1,5 @@
 import { login } from "../actions";
+import Image from "next/image";
 
 export const metadata = {
   title: "Owner Login",
@@ -20,7 +21,14 @@ export default async function LoginPage({
   return (
     <main className="flex min-h-screen items-center justify-center bg-charcoal px-6">
       <div className="w-full max-w-sm bg-white p-8 sm:p-10">
-        <h1 className="text-xl font-bold uppercase tracking-[0.2em]">
+                <Image
+          src="/logo-full.png"
+          alt="Autofix"
+          width={802}
+          height={637}
+          className="mx-auto mb-6 h-auto w-32"
+        />
+        <h1 className="text-center text-xl font-bold uppercase tracking-[0.2em]">
           Owner Login
         </h1>
         <p className="mt-2 text-sm text-charcoal/60">

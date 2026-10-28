@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { bookingSchema } from "@/lib/validation";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { notifyOwnerNewBooking } from "@/lib/email";
 
 export async function POST(req: Request) {
   let body: unknown;
@@ -39,22 +40,24 @@ export async function POST(req: Request) {
     );
   }
 
+  const record = {
+    customer_name: d.customer_name,
+    phone: d.phone,
+    email: d.email || null,
+    vehicle_make: d.vehicle_make,
+    vehicle_model: d.vehicle_model,
+    registration_number: d.registration_number.toUpperCase(),
+    service_id: service.id,
+    service_name: service.name,
+    appointment_date: d.appointment_date,
+    appointment_time: d.appointment_time,
+    problem_description: d.problem_description || null,
+    status: "pending",
+  };
+
   const { data, error } = await admin
     .from("appointments")
-    .insert({
-      customer_name: d.customer_name,
-      phone: d.phone,
-      email: d.email || null,
-      vehicle_make: d.vehicle_make,
-      vehicle_model: d.vehicle_model,
-      registration_number: d.registration_number.toUpperCase(),
-      service_id: service.id,
-      service_name: service.name,
-      appointment_date: d.appointment_date,
-      appointment_time: d.appointment_time,
-      problem_description: d.problem_description || null,
-      status: "pending",
-    })
+    .insert(record)
     .select("id")
     .single();
 
@@ -69,6 +72,9 @@ export async function POST(req: Request) {
       { status: 500 }
     );
   }
+
+  // Never blocks the booking: failures are only logged.
+  await notifyOwnerNewBooking({ id: data.id, ...record });
 
   return NextResponse.json({ ok: true, id: data.id, service: service.name });
 }

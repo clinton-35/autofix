@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Settings } from "@/lib/data";
+import Image from "next/image";
 
 const quick = [
   { href: "/about", label: "About Us" },
@@ -18,9 +19,13 @@ export default function Footer({ s }: { s: Settings }) {
     <footer className="bg-charcoal text-white">
       <div className="mx-auto grid max-w-7xl gap-12 px-6 py-20 sm:grid-cols-2 lg:grid-cols-4">
         <div>
-          <p className="text-lg font-bold uppercase tracking-[0.25em]">
-            {s.garage_name}
-          </p>
+                    <Image
+            src="/logo-full-white.png"
+            alt={s.garage_name}
+            width={802}
+            height={637}
+            className="h-auto w-44"
+          />
           {s.address && (
             <p className="mt-5 whitespace-pre-line text-sm text-white/70">
               {s.address}
