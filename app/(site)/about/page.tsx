@@ -16,12 +16,7 @@ export default async function AboutPage() {
 
   return (
     <>
-      <PageHeader title="About Us" subtitle="Who we are and how we work." />
-
-           <OfferBand content={content} />
-
-      <GermanSpecialists />
-
+    <PageHeader title="About Us" subtitle="Who we are and how we work." />
 
       <section className="grid lg:grid-cols-2">
         <Photo
@@ -71,6 +66,15 @@ export default async function AboutPage() {
           </div>
         </div>
       </section>
+      <section>
+        
+
+           <OfferBand content={content} />
+
+      <GermanSpecialists />
+      </section>
+
+      
 
       {(s.address || s.map_embed_url) && (
         <section className="bg-charcoal py-24 text-white sm:py-28">
