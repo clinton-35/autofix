@@ -83,10 +83,22 @@ export async function saveAvailability(formData: FormData) {
   }
   if (close <= open) back("error", "Closing time must be after opening time.");
 
-  const slot = parseInt(text(formData, "slot_minutes", 4), 10);
-  if (!(slot >= 15 && slot <= 480)) {
-    back("error", "Appointment length must be between 15 and 480 minutes.");
+    const satOpen = text(formData, "sat_open_time", 5);
+  const satClose = text(formData, "sat_close_time", 5);
+  let sat_open_time: string | null = null;
+  let sat_close_time: string | null = null;
+  if (satOpen || satClose) {
+    if (!/^\d{2}:\d{2}$/.test(satOpen) || !/^\d{2}:\d{2}$/.test(satClose)) {
+      back("error", "Please enter both Saturday times, or leave both empty.");
+    }
+    if (satClose <= satOpen) {
+      back("error", "Saturday closing time must be after opening time.");
+    }
+    sat_open_time = satOpen;
+    sat_close_time = satClose;
   }
+
+  const slot = parseInt(text(formData, "slot_minutes", 4), 10);
 
   const capacity = parseInt(text(formData, "capacity_per_slot", 3), 10);
   if (!(capacity >= 1 && capacity <= 50)) {
@@ -102,8 +114,10 @@ export async function saveAvailability(formData: FormData) {
     .from("garage_settings")
     .update({
       working_days: days,
-      open_time: open,
+            open_time: open,
       close_time: close,
+      sat_open_time,
+      sat_close_time,
       slot_minutes: slot,
       capacity_per_slot: capacity,
       max_days_ahead: ahead,

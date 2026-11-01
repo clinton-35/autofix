@@ -1,13 +1,15 @@
 import Link from "next/link";
+import OfferBand from "@/components/site/OfferBand";
+import GermanSpecialists from "@/components/site/GermanSpecialists";
 import PageHeader from "@/components/site/PageHeader";
 import Photo from "@/components/ui/Photo";
-import { getServices } from "@/lib/data";
+import { getContent, getServices } from "@/lib/data";
 
 export const metadata = { title: "Our Services" };
 export const revalidate = 30;
 
 export default async function ServicesPage() {
-  const services = await getServices();
+  const [services, content] = await Promise.all([getServices(), getContent()]);
 
   return (
     <>
@@ -57,6 +59,10 @@ export default async function ServicesPage() {
           )}
         </div>
       </section>
+
+      <OfferBand content={content} />   
+
+      <GermanSpecialists />
     </>
   );
 }

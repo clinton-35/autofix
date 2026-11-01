@@ -168,6 +168,41 @@ export default async function SettingsPage({
               </div>
             </div>
 
+                        <div>
+              <p className={label}>
+                Saturday hours{" "}
+                <span className="text-charcoal/50">
+                  (leave both empty to use the opening times above)
+                </span>
+              </p>
+              <div className="grid gap-5 sm:grid-cols-2">
+                <div>
+                  <label htmlFor="sat_open_time" className="mb-2 block text-xs text-charcoal/60">
+                    Saturday opening time
+                  </label>
+                  <input
+                    id="sat_open_time"
+                    name="sat_open_time"
+                    type="time"
+                    defaultValue={s.sat_open_time ? String(s.sat_open_time).slice(0, 5) : ""}
+                    className={field}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="sat_close_time" className="mb-2 block text-xs text-charcoal/60">
+                    Saturday closing time
+                  </label>
+                  <input
+                    id="sat_close_time"
+                    name="sat_close_time"
+                    type="time"
+                    defaultValue={s.sat_close_time ? String(s.sat_close_time).slice(0, 5) : ""}
+                    className={field}
+                  />
+                </div>
+              </div>
+            </div>
+
             <button type="submit" className={submit}>
               Save availability
             </button>

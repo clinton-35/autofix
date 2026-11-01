@@ -1,6 +1,9 @@
 import Link from "next/link";
 import Photo from "@/components/ui/Photo";
+import OfferBand from "@/components/site/OfferBand";
+import GermanSpecialists from "@/components/site/GermanSpecialists";
 import { getContent, getGallery, getReviews, getServices } from "@/lib/data";
+
 
 export const revalidate = 30;
 
@@ -127,6 +130,11 @@ export default async function HomePage() {
           </div>
         </section>
       )}
+
+           <OfferBand content={content} />
+
+      <GermanSpecialists />
+ 
 
       <section className="grid lg:grid-cols-2">
         <Photo

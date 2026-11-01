@@ -36,6 +36,22 @@ export const SECTIONS: SectionDef[] = [
     descriptionLabel: "Introduction text",
   },
   {
+    key: "home_housecalls",
+    group: "Homepage",
+    title: "House calls",
+    headingLabel: "Heading",
+    descriptionLabel: "Text",
+    hint: "Shown on the homepage and the Services page. Leave the heading empty to hide it.",
+  },
+  {
+    key: "home_parts",
+    group: "Homepage",
+    title: "Parts for German vehicles",
+    headingLabel: "Heading",
+    descriptionLabel: "Text",
+    hint: "Shown on the homepage and the Services page. Leave the heading empty to hide it.",
+  },
+  {
     key: "home_expertise",
     group: "Homepage",
     title: "Automotive expertise",

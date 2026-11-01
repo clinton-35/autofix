@@ -1,6 +1,8 @@
 import PageHeader from "@/components/site/PageHeader";
 import Photo from "@/components/ui/Photo";
 import { getContent, getSettings } from "@/lib/data";
+import OfferBand from "@/components/site/OfferBand";
+import GermanSpecialists from "@/components/site/GermanSpecialists";
 
 export const metadata = { title: "About Us" };
 export const revalidate = 30;
@@ -15,6 +17,11 @@ export default async function AboutPage() {
   return (
     <>
       <PageHeader title="About Us" subtitle="Who we are and how we work." />
+
+           <OfferBand content={content} />
+
+      <GermanSpecialists />
+
 
       <section className="grid lg:grid-cols-2">
         <Photo

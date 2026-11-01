@@ -88,6 +88,7 @@ export default function Footer({ s }: { s: Settings }) {
         </div>
       </div>
 
+
       <div className="border-t border-white/10 px-6 py-6 text-center text-xs text-white/50">
         &copy; {new Date().getFullYear()} {s.garage_name}. All rights reserved.
       </div>
