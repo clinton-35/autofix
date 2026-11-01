@@ -262,7 +262,7 @@ export default function BookingForm({
             <label htmlFor="customer_name" className={labelClass}>
               Full name
             </label>
-            <input id="customer_name" name="customer_name" required minLength={2} maxLength={100} autoComplete="name" placeholder="John Kamau" className={field} />
+            <input id="customer_name" name="customer_name" required minLength={2} maxLength={100} autoComplete="name" placeholder="John Doe" className={field} />
           </div>
           <div>
             <label htmlFor="phone" className={labelClass}>
@@ -288,13 +288,13 @@ export default function BookingForm({
               <label htmlFor="vehicle_make" className={labelClass}>
                 Make
               </label>
-              <input id="vehicle_make" name="vehicle_make" required maxLength={50} placeholder="Toyota" className={field} />
+              <input id="vehicle_make" name="vehicle_make" required maxLength={50} placeholder="Mercedes-Benz" className={field} />
             </div>
             <div>
               <label htmlFor="vehicle_model" className={labelClass}>
                 Model
               </label>
-              <input id="vehicle_model" name="vehicle_model" required maxLength={50} placeholder="Prado" className={field} />
+              <input id="vehicle_model" name="vehicle_model" required maxLength={50} placeholder="GLE" className={field} />
             </div>
           </div>
           <div>
